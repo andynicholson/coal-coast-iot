@@ -40,7 +40,13 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
         }
       });
     }
+    return res.status(200).json({ loggedIn: true });
+  } else {
+    return res.status(401).json({
+      error: {
+        code: 'not_registered',
+        message: 'This user is not registered. Redis is not configured.'
+      }
+    });
   }
-
-  return res.status(200).json({ loggedIn: true });
 }
