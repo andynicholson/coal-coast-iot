@@ -17,18 +17,18 @@
 export const SITE_URL = 'https://coal-coast-iot.vercel.app/';
 export const SITE_ORIGIN = process.env.NEXT_PUBLIC_SITE_ORIGIN || new URL(SITE_URL).origin;
 export const TWITTER_USER_NAME = 'CoalCoastIOT';
-export const BRAND_NAME = 'CoalCoastIOT';
+export const BRAND_NAME = 'Coal Coast IOT';
 export const SITE_NAME_MULTILINE = ['CoalCoastIOT', 'Conf'];
 export const SITE_NAME = 'CoalCoastIOT Conf';
 export const META_DESCRIPTION =
-  'This is an online event organised for practicioners involved in IOT on the South Coast of NSW.';
+  'This is an online event organised for practitioners involved in IOT in the Illawarra.';
 export const SITE_DESCRIPTION =
   'An interactive online experience by the community, free for everyone.';
 export const DATE = 'September 1, 2021';
 export const SHORT_DATE = 'Sept 1 - 9:00am AEST';
 export const FULL_DATE = 'Setp 1 9am Australian Eastern Standard Time (GMT-10)';
 export const TWEET_TEXT = META_DESCRIPTION;
-export const COOKIE = 'user-id';
+export const COOKIE = 'cciot-user-id';
 
 // Remove process.env.NEXT_PUBLIC_... below and replace them with
 // strings containing your own privacy policy URL and copyright holder name
