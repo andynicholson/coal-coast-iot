@@ -23,26 +23,24 @@ import Hero from './hero';
 import Form from './form';
 import LearnMore from './learn-more';
 import useLoginStatus from '@lib/hooks/use-login-status';
-
-import { COOKIE, SAMPLE_TICKET_NUMBER } from '@lib/constants';
+import useRegistrationDetails from '@lib/hooks/use-registration-details';
 
 type Props = {
   defaultUserData: UserData;
   sharePage?: boolean;
   defaultPageState?: PageState;
-  name: string;
-  ticketNumber: number;
 };
 
 export default function Conf({
   defaultUserData,
   sharePage,
-  defaultPageState = 'registration', name, ticketNumber
+  defaultPageState = 'registration'
 }: Props) {
   const [userData, setUserData] = useState<UserData>(defaultUserData);
   const [pageState, setPageState] = useState<PageState>(defaultPageState);
-  const { loginStatus, mutate } = useLoginStatus();
-  
+  const { loginStatus } = useLoginStatus();
+  const { result } = useRegistrationDetails();
+
   return (
     <ConfDataContext.Provider
       value={{
@@ -53,8 +51,11 @@ export default function Conf({
     >
       <Layout>
         <ConfContainer>
-          
-          {loginStatus === 'loggedIn' ? ( <div> Welcome Back {name}! You have ticket number {ticketNumber} </div>) : (<></>)}
+          {loginStatus === 'loggedIn' ? (
+            <div> Welcome Back {result?.name} ! You have a ticket already reserved. </div>
+          ) : (
+            <></>
+          )}
 
           {pageState === 'registration' && !sharePage ? (
             <>
@@ -62,7 +63,6 @@ export default function Conf({
               <Form />
               <LearnMore />
             </>
-            
           ) : (
             <Ticket
               username={userData.username}
@@ -76,42 +76,3 @@ export default function Conf({
     </ConfDataContext.Provider>
   );
 }
-
-
-export async function getServerSideProps(context: { req: { cookies: { [x: string]: any; }; }; })  {
-
-  const redis = require('@lib/redis');
-
-  const id = context.req.cookies[COOKIE];
-  
-  if (redis) {
-    if (id) {
-      const [name, ticketNumber] = await redis.hmget(`user:${id}`, 'name', 'ticketNumber');
-
-      if (ticketNumber) {
-        return {
-          props: {
-            name: name || null,
-            ticketNumber: parseInt(ticketNumber, 10) || null
-          },
-          revalidate: 5
-        };
-      }
-    }
-    return {
-      props: {
-        name: null,
-        ticketNumber: null
-      },
-      revalidate: 5
-    };
-  } else {
-    return {
-      props: {
-        name: 'Unknown Person',
-        ticketNumber: SAMPLE_TICKET_NUMBER
-      },
-      revalidate: 5
-    };
-  }
-};

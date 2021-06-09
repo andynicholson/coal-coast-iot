@@ -1,5 +1,5 @@
 /**
- * Copyright 2020 Vercel Inc.
+ * Copyright 2021 Andrew Peter Nicholson
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,9 @@
 
 import useSWR, { ConfigInterface } from 'swr';
 
-export default function useLoginStatus(opts?: ConfigInterface) {
+export default function useRegistrationDetails(opts?: ConfigInterface) {
   const { data, error, mutate } = useSWR(
-    `/api/auth`,
+    `/api/userRegistration`,
     async url => {
       const res = await fetch(url);
       if (!res.ok) {
@@ -33,12 +33,7 @@ export default function useLoginStatus(opts?: ConfigInterface) {
   );
 
   return {
-    loginStatus: error
-      ? ('loggedOut' as const)
-      : !data
-      ? ('loading' as const)
-      : ('loggedIn' as const),
+    result: error ? undefined : data,
     mutate
   };
 }
-

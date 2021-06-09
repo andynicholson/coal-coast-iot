@@ -57,8 +57,6 @@ export default function TicketShare({ username, ticketNumber, name, usernameFrom
       </Head>
       <SkipNavContent />
       <ConfContent
-        name=""
-        ticketNumber={SAMPLE_TICKET_NUMBER}
         defaultUserData={{
           username: username || undefined,
           name: name || '',
