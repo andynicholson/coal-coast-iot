@@ -23,7 +23,7 @@ import Hero from './hero';
 import Form from './form';
 import LearnMore from './learn-more';
 import useLoginStatus from '@lib/hooks/use-login-status';
-import redis from '@lib/redis';
+
 import { COOKIE, SAMPLE_TICKET_NUMBER } from '@lib/constants';
 
 type Props = {
@@ -79,7 +79,9 @@ export default function Conf({
 
 
 export async function getServerSideProps(context: { cookies: { [x: string]: any; }; })  {
- 
+
+  const redis = require('@lib/redis');
+
   const id = context.cookies[COOKIE];
   
   if (redis) {
