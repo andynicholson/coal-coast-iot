@@ -58,7 +58,9 @@ export default function Conf({
             <>
               <Hero />
               {loginStatus === 'loggedIn' ? (
-                <div className={cn(styleUtils.appear, styleUtils['appear-third'], styles.hero)}>
+                <div
+                  className={cn(styleUtils.appear, styleUtils['appear-fifth'], styles.description)}
+                >
                   {' '}
                   Welcome Back {result?.name} ! You have a ticket already reserved.{' '}
                 </div>
