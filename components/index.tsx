@@ -78,11 +78,11 @@ export default function Conf({
 }
 
 
-export async function getServerSideProps(context: { cookies: { [x: string]: any; }; })  {
+export async function getServerSideProps(context: { req: { cookies: { [x: string]: any; }; }; })  {
 
   const redis = require('@lib/redis');
 
-  const id = context.cookies[COOKIE];
+  const id = context.req.cookies[COOKIE];
   
   if (redis) {
     if (id) {
