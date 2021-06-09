@@ -30,8 +30,8 @@ type Props = {
   defaultUserData: UserData;
   sharePage?: boolean;
   defaultPageState?: PageState;
-  name: string;
-  ticketNumber: number;
+  name?: string;
+  ticketNumber?: number;
 };
 
 export default function Conf({
