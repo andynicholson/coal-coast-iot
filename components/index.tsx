@@ -23,17 +23,21 @@ import Hero from './hero';
 import Form from './form';
 import LearnMore from './learn-more';
 import useLoginStatus from '@lib/hooks/use-login-status';
+import redis from '@lib/redis';
+import { COOKIE, SAMPLE_TICKET_NUMBER } from '@lib/constants';
 
 type Props = {
   defaultUserData: UserData;
   sharePage?: boolean;
   defaultPageState?: PageState;
+  name: string;
+  ticketNumber: number;
 };
 
 export default function Conf({
   defaultUserData,
   sharePage,
-  defaultPageState = 'registration'
+  defaultPageState = 'registration', name, ticketNumber
 }: Props) {
   const [userData, setUserData] = useState<UserData>(defaultUserData);
   const [pageState, setPageState] = useState<PageState>(defaultPageState);
@@ -50,7 +54,7 @@ export default function Conf({
       <Layout>
         <ConfContainer>
           
-          {loginStatus === 'loggedIn' ? ( <div> Welcome Back {userData.name} ! </div>) : (<></>)}
+          {loginStatus === 'loggedIn' ? ( <div> Welcome Back {name}! You have ticket number {ticketNumber} </div>) : (<></>)}
 
           {pageState === 'registration' && !sharePage ? (
             <>
@@ -72,3 +76,40 @@ export default function Conf({
     </ConfDataContext.Provider>
   );
 }
+
+
+export async function getServerSideProps(context: { cookies: { [x: string]: any; }; })  {
+ 
+  const id = context.cookies[COOKIE];
+  
+  if (redis) {
+    if (id) {
+      const [name, ticketNumber] = await redis.hmget(`user:${id}`, 'name', 'ticketNumber');
+
+      if (ticketNumber) {
+        return {
+          props: {
+            name: name || null,
+            ticketNumber: parseInt(ticketNumber, 10) || null
+          },
+          revalidate: 5
+        };
+      }
+    }
+    return {
+      props: {
+        name: null,
+        ticketNumber: null
+      },
+      revalidate: 5
+    };
+  } else {
+    return {
+      props: {
+        name: 'Unknown Person',
+        ticketNumber: SAMPLE_TICKET_NUMBER
+      },
+      revalidate: 5
+    };
+  }
+};
