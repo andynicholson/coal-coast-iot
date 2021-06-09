@@ -51,15 +51,14 @@ export default function Conf({
     >
       <Layout>
         <ConfContainer>
-          {loginStatus === 'loggedIn' ? (
-            <div> Welcome Back {result?.name} ! You have a ticket already reserved. </div>
-          ) : (
-            <></>
-          )}
-
           {pageState === 'registration' && !sharePage ? (
             <>
               <Hero />
+              {loginStatus === 'loggedIn' ? (
+                <div> Welcome Back {result?.name} ! You have a ticket already reserved. </div>
+              ) : (
+                <></>
+              )}
               <Form />
               <LearnMore />
             </>
