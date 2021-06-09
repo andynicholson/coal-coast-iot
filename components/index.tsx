@@ -24,6 +24,9 @@ import Form from './form';
 import LearnMore from './learn-more';
 import useLoginStatus from '@lib/hooks/use-login-status';
 import useRegistrationDetails from '@lib/hooks/use-registration-details';
+import cn from 'classnames';
+import styleUtils from './utils.module.css';
+import styles from './hero.module.css';
 
 type Props = {
   defaultUserData: UserData;
@@ -55,7 +58,7 @@ export default function Conf({
             <>
               <Hero />
               {loginStatus === 'loggedIn' ? (
-                <div> Welcome Back {result?.name} ! You have a ticket already reserved. </div>
+                <div className={cn(styleUtils.appear, styleUtils['appear-fourth'], styles.info)}> Welcome Back {result?.name} ! You have a ticket already reserved. </div>
               ) : (
                 <></>
               )}
