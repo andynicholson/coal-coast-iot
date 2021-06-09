@@ -19,7 +19,7 @@ import { SkipNavContent } from '@reach/skip-nav';
 
 import Page from '@components/page';
 import ConfContent from '@components/index';
-import { META_DESCRIPTION, SITE_NAME } from '@lib/constants';
+import { META_DESCRIPTION, SAMPLE_TICKET_NUMBER, SITE_NAME } from '@lib/constants';
 
 export default function Conf() {
   const { query } = useRouter();
@@ -39,6 +39,8 @@ export default function Conf() {
     <Page meta={meta} fullViewport>
       <SkipNavContent />
       <ConfContent
+        name=""
+        ticketNumber={SAMPLE_TICKET_NUMBER}
         defaultUserData={defaultUserData}
         defaultPageState={query.ticketNumber ? 'ticket' : 'registration'}
       />
