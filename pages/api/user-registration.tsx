@@ -24,7 +24,7 @@ export default async function userRegistration(req: NextApiRequest, res: NextApi
   if (redis) {
     if (id) {
       const [name, ticketNumber, username] = await redis.hmget(
-        `user:${id}`,
+        `id:${id}`,
         'name',
         'ticketNumber',
         'username'
