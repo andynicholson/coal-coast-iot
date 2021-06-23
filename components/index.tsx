@@ -63,12 +63,7 @@ export default function Conf({
                 >
                   {' '}
                   Welcome Back {result?.name} ! You have a ticket already reserved.
-                  <a
-                    href="/tickets/{result?.username}"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.button}
-                  >
+                  <a href={`/tickets/${result?.username}`} className={styles.link}>
                     {' '}
                     View it here
                   </a>
