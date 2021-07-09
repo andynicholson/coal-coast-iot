@@ -22,18 +22,21 @@ import type { AppProps } from 'next/app';
 import NProgress from '@components/nprogress';
 import ResizeHandler from '@components/resize-handler';
 import { useEffect } from 'react';
+import { UserProvider } from '@auth0/nextjs-auth0';
 
 export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     document.body.classList?.remove('loading');
   }, []);
   return (
-    <SSRProvider>
-      <OverlayProvider>
-        <Component {...pageProps} />
-        <ResizeHandler />
-        <NProgress />
-      </OverlayProvider>
-    </SSRProvider>
+    <UserProvider>
+      <SSRProvider>
+        <OverlayProvider>
+          <Component {...pageProps} />
+          <ResizeHandler />
+          <NProgress />
+        </OverlayProvider>
+      </SSRProvider>
+    </UserProvider>
   );
 }
