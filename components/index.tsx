@@ -62,7 +62,7 @@ export default function Conf({
                   className={cn(styleUtils.appear, styleUtils['appear-fifth'], styles.description)}
                 >
                   {' '}
-                  Welcome Back {result?.name} ! You have a ticket already reserved.
+                  Welcome Back {result?.name}! You have a ticket already reserved.
                   <a href={`/tickets/${result?.username}`} className={styles.link}>
                     {' '}
                     View it here
